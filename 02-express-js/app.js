@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const app = express();
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
+const path = require("path");
 //first middleware
 //request(object),response(object), next
 // app.use((req, res, next) => {
@@ -14,12 +15,13 @@ const shopRoutes = require("./routes/shop");
 app.use(bodyParser.urlencoded({ extended: false }));
 
 //second middleware
-app.use(adminRoutes);
+app.use("/admin", adminRoutes);
 app.use(shopRoutes);
 
 //404 error page
 app.use((req, res, next) => {
-  res.status(404).send("<h1>Page not found :(</h1>");
+  // res.status(404).send("<h1>Page not found :(</h1>");
+  res.status(404).sendFile(path.join(__dirname, "views", "404.html"));
 });
 
 // const server = http.createServer(app);
@@ -67,3 +69,15 @@ app.listen(3000);
 //by default incoming request does not parsed, we use a package called body parser to parse the incoming request
 
 //express router
+//to minimize the complexity of the app we make folders of the routes pages
+//and import that in our app
+
+//adding and serving html pages
+//add html pages
+//instead of using res.send() we want to send the html file so we use res.sendFile('path')
+//res.sendFile('/views/shop.html') it will not show our page, becuase / in express does not mean the folder it means the root path
+//for this we use core module 'path'
+// res.sendFile(path.join(__dirname,'../','views','shop.html'))
+
+//using a helper function for navigation
+// instead of '../' we can use '..'
