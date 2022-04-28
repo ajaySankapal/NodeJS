@@ -10,9 +10,24 @@ const app = express();
 //   next(); //allows request to continue to the next middleware in the line
 // });
 
-//second middleware
+app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use((req, res, next) => {
+//second middleware
+app.use("/add-product", (req, res, next) => {
+  ///if the path is started with '/' it will show this page, it does not have to be exactly '/' if it start with '/' it will show this page
+  console.log("Add peoduct page");
+  res.send(
+    "<form action='/product' method='POST'><input type='text' name='title'><button type='submit'>Add</button></form>"
+  ); //response.send
+});
+
+app.use("/product", (req, res, next) => {
+  console.log(req.body); //we get undefined in the console, because by default request does not try to parse the incoming request body
+  res.redirect("/");
+});
+
+app.use("/", (req, res, next) => {
+  ///if the path is started with '/' it will show this page, it does not have to be exactly '/' if it start with '/' it will show this page
   console.log("In the other middleware");
   res.send("<h1>Hello from express js!</h1>"); //response.send
 });
@@ -57,3 +72,5 @@ app.listen(3000);
 //handling diffrent routes
 //format of app.use()  //we can use differente overloads
 //app.use('/path',(first callback),(second callback),...)  //if the path is started with '/' it will show this page only
+
+//parsing incoming request
