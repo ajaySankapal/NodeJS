@@ -26,3 +26,6 @@ server.listen(3000);
 
 //we import sth by require('') in nodejs but how to export sth?
 //we export sth by module.exports = functionName
+
+//script - we can add our personalize script to run our code.
+//for this we have to add package.json and in that we have to customize the script

@@ -44,6 +44,8 @@
 //v8 engine and libuv is the most important part of the nodejs
 //libuv is built by C language it handles the input and output task that node can delegate to other parts of the our OS. Asynchrounous I/O
 
+//asynchronous
+
 function findMeaning() {
   return 42;
 }
