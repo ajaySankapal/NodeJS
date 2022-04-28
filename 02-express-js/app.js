@@ -2,7 +2,8 @@ const express = require("express");
 const http = require("http");
 const bodyParser = require("body-parser");
 const app = express();
-
+const adminRoutes = require("./routes/admin");
+const shopRoutes = require("./routes/shop");
 //first middleware
 //request(object),response(object), next
 // app.use((req, res, next) => {
@@ -13,23 +14,12 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 
 //second middleware
-app.use("/add-product", (req, res, next) => {
-  ///if the path is started with '/' it will show this page, it does not have to be exactly '/' if it start with '/' it will show this page
-  console.log("Add peoduct page");
-  res.send(
-    "<form action='/product' method='POST'><input type='text' name='title'><button type='submit'>Add</button></form>"
-  ); //response.send
-});
+app.use(adminRoutes);
+app.use(shopRoutes);
 
-app.use("/product", (req, res, next) => {
-  console.log(req.body); //we get undefined in the console, because by default request does not try to parse the incoming request body
-  res.redirect("/");
-});
-
-app.use("/", (req, res, next) => {
-  ///if the path is started with '/' it will show this page, it does not have to be exactly '/' if it start with '/' it will show this page
-  console.log("In the other middleware");
-  res.send("<h1>Hello from express js!</h1>"); //response.send
+//404 error page
+app.use((req, res, next) => {
+  res.status(404).send("<h1>Page not found :(</h1>");
 });
 
 // const server = http.createServer(app);
@@ -74,3 +64,6 @@ app.listen(3000);
 //app.use('/path',(first callback),(second callback),...)  //if the path is started with '/' it will show this page only
 
 //parsing incoming request
+//by default incoming request does not parsed, we use a package called body parser to parse the incoming request
+
+//express router
