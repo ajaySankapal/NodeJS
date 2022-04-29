@@ -1,9 +1,16 @@
 const express = require("express");
+
 const http = require("http");
 const bodyParser = require("body-parser");
+
 const app = express();
-const adminRoutes = require("./routes/admin");
+
+app.set("view engine", "pug");
+app.set("views", "views");
+
+const adminData = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
+
 const path = require("path");
 //first middleware
 //request(object),response(object), next
@@ -15,13 +22,14 @@ const path = require("path");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 //second middleware
-app.use("/admin", adminRoutes);
+app.use("/admin", adminData.routes);
 app.use(shopRoutes);
 
 //404 error page
 app.use((req, res, next) => {
   // res.status(404).send("<h1>Page not found :(</h1>");
-  res.status(404).sendFile(path.join(__dirname, "views", "404.html"));
+  // res.status(404).sendFile(path.join(__dirname, "views", "404.html"));
+  res.status(404).render("404", { pageTitle: "page not found" });
 });
 
 // const server = http.createServer(app);
@@ -89,3 +97,21 @@ app.listen(3000);
 
 //using a helper function for navigation
 // instead of '../' we can use '..'
+
+//templating engines
+//used to diplay the dynamic templates
+//EJS <p><% = name %> </p>
+//->use normal html and plain Javascript in your templates
+
+//Pug(Jade) p # {name}
+//->use minimal HTML and custom temlate language
+
+//Handlebars <p> {{name}} </p>
+//-> use normal HTML and custom template language
+
+// app.set() view-engine we tell the browser to diplay the dynamic templating data use this engine
+
+//adding layouts - we are repeating some codes again and again
+//what if we make a layout of it and use it dynamically for different pages
+//we make a base layout and can extend that layout to use in other files, actually define some placeholder or hooks that other views can enter their content
+//like for styles we can write "block styles" in head section so by this we can add other styles for other views
