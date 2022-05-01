@@ -8,6 +8,9 @@
 //JavaScript engine : a js engine is a computer program that executes the js code.
 //v8 spider monkey javascript core
 
+//nodejs allows us to run javascript on the server
+//nodejs uses v8 engine and add some cool features with it, like to access your file system(opening file, reading file, deleting file) we can do this in the browser, so this feature is provided by node
+
 //1995 netscape browser gives us js Renden nyke used to work there developed js
 //2008 google annouced chrome browser
 //2009 ryan dahl come up with nodejs
