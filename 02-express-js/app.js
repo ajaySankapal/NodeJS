@@ -19,7 +19,8 @@ const app = express();
 app.set("view engine", "ejs");
 app.set("views", "views");
 
-const adminData = require("./routes/admin");
+// const adminData = require("./routes/admin");
+const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 
 const path = require("path");
@@ -33,7 +34,7 @@ const path = require("path");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 //second middleware
-app.use("/admin", adminData.routes);
+app.use("/admin", adminRoutes);
 app.use(shopRoutes);
 
 //404 error page
@@ -126,3 +127,15 @@ app.listen(3000);
 //what if we make a layout of it and use it dynamically for different pages
 //we make a base layout and can extend that layout to use in other files, actually define some placeholder or hooks that other views can enter their content
 //like for styles we can write "block styles" in head section so by this we can add other styles for other views
+
+//mvc
+//what is mvc?
+//it is all about separation of concerns, Making sure different part of your code do different things and you clearly know which part is responsible for what?
+
+// Models Views Controllers
+
+//Models - represent data in your code, work with data (save,fetch), It is the database part of the application
+
+//Views - what users sees, Decoupled from your application code, utilize model and present data in a form in which the user wants
+
+//Controllers - Controller controls the requests of the user and then generates appropriate response which is fed to the viewer. Typically, the user interacts with the View, which in turn generates the appropriate request, this request will be handled by a controller. The controller renders the appropriate view with the model data as a response.
